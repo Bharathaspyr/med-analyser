@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Signup from "./components/Signup";
+import Login from "./components/Login";
 const Home = () => (
   <>
     <Hero />
@@ -19,10 +20,9 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/features" element={<Body />} />
           <Route path="/contact" element={<div className='text-center py-20 text-2xl'>Contact Us Page</div>} />
-          <Route path="/login" element={<div className='text-center py-20 text-2xl'>Login Page</div>} />
-          <Route path="/signup" element={<div className='text-center py-20 text-2xl'>Sign Up Page</div>} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
         </Routes>
         <Footer />
       </div>
