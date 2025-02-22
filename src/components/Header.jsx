@@ -15,7 +15,7 @@ const Header = () => {
     <nav className="navbar bg-base-100 shadow-lg fixed top-0 w-full z-50 backdrop-blur-md">
       <div className="w-full flex justify-between items-center py-3 px-6">
         <Link to="/" className="btn btn-ghost normal-case text-3xl font-extrabold text-primary">
-          <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-indigo-600 bg-clip-text text-transparent">
             MedScan AI
           </span>
         </Link>
