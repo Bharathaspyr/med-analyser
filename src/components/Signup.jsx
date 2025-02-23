@@ -21,7 +21,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-screen bg-white pt-10">
+    <div className="flex justify-center items-center h-screen w-screen bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -30,29 +30,33 @@ const Signup = () => {
       >
         <h2 className="text-4xl font-bold text-blue-500 mb-6">Sign Up</h2>
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        {error && <p className="text-red-500 text-center mb-3">{error}</p>}
 
         <form onSubmit={handleSignup} className="flex flex-col gap-4 w-full">
-          <input
-            type="text"
-            placeholder="First Name"
-            className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+          {/* First & Last Name on the same row */}
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder="First Name"
+              className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
+
           <input
             type="email"
             placeholder="Email"
-            className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
+            className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -60,24 +64,29 @@ const Signup = () => {
           <input
             type="password"
             placeholder="Password"
-            className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
+            className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             type="submit"
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 rounded-lg w-full shadow-lg hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 rounded-lg w-full shadow-lg transition-all duration-300"
           >
             Sign Up
-          </button>
+          </motion.button>
         </form>
 
-        <p className="text-center mt-4 text-gray-600">
+        <p className="text-gray-600 text-sm mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 font-semibold hover:underline">
+          <span
+            onClick={() => navigate("/login")}
+            className="text-blue-500 font-semibold cursor-pointer hover:underline"
+          >
             Log in
-          </a>
+          </span>
         </p>
       </motion.div>
     </div>

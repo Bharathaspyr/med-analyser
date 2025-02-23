@@ -8,18 +8,18 @@ const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (email && password) {
-      console.log("User signed up with", email, password);
-      navigate("/");
+      console.log("User logged in with", email, password);
+      navigate("/"); // Redirect to home after login
     } else {
       setError("Please fill in all fields.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-screen bg-white">
+    <div className="flex justify-center items-center h-screen w-screen bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,9 +28,9 @@ const Login = () => {
       >
         <h2 className="text-4xl font-bold text-blue-500 mb-6">Login</h2>
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        {error && <p className="text-red-500 text-center mb-3">{error}</p>}
 
-        <form onSubmit={handleSignup} className="flex flex-col gap-4 w-full">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4 w-full">
           <input
             type="email"
             placeholder="Email"
@@ -47,13 +47,25 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             type="submit"
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 rounded-lg w-full shadow-lg hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 rounded-lg w-full shadow-lg transition-all duration-300"
           >
             Login
-          </button>
+          </motion.button>
         </form>
+
+        <p className="text-gray-600 text-sm mt-4">
+          Don't have an account?{" "}
+          <span
+            onClick={() => navigate("/signup")}
+            className="text-blue-500 font-semibold cursor-pointer hover:underline"
+          >
+            Sign up
+          </span>
+        </p>
       </motion.div>
     </div>
   );
