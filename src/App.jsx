@@ -6,6 +6,7 @@ import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 const Home = () => (
   <>
     <Hero />
@@ -17,13 +18,13 @@ const App = () => {
   return (
     <Router>
       <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/" element={<><Header /><Home /><Footer /></>} />
+          <Route path="/login" element={<><Header /><Login /><Footer /></>} />
+          <Route path="/signup" element={<><Header /><Signup /><Footer /></>} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-        <Footer />
+
       </div>
     </Router>
   );

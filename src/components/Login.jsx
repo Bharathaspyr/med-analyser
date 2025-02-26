@@ -6,13 +6,17 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     if (email && password) {
       console.log("User logged in with", email, password);
-      navigate("/"); // Redirect to home after login
+      setAlert({ type: "success", message: "Login successful! Redirecting..." });
+      setTimeout(() => {
+        navigate("/"); 
+      }, 1500);
     } else {
       setError("Please fill in all fields.");
     }
@@ -27,6 +31,19 @@ const Login = () => {
         className="w-96 bg-white shadow-2xl border border-gray-200 rounded-2xl flex flex-col items-center p-8"
       >
         <h2 className="text-4xl font-bold text-blue-500 mb-6">Login</h2>
+
+        {alert && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className={`w-full p-3 text-center text-white font-semibold rounded-lg mb-4 ${
+              alert.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {alert.message}
+          </motion.div>
+        )}
 
         {error && <p className="text-red-500 text-center mb-3">{error}</p>}
 

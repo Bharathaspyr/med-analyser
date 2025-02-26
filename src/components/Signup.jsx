@@ -7,6 +7,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -14,7 +15,10 @@ const Signup = () => {
     e.preventDefault();
     if (firstName && lastName && email && password) {
       console.log("User signed up with", firstName, lastName, email, password);
-      navigate("/");
+      setAlert({ type: "success", message: "Signup successful! Redirecting..." });
+      setTimeout(() => {
+        navigate("/login"); 
+      }, 1500);
     } else {
       setError("Please fill in all fields.");
     }
@@ -30,6 +34,19 @@ const Signup = () => {
       >
         <h2 className="text-4xl font-bold text-blue-500 mb-6">Sign Up</h2>
 
+                {alert && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={`w-full p-3 text-center text-white font-semibold rounded-lg mb-4 ${
+                      alert.type === "success" ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  >
+                    {alert.message}
+                  </motion.div>
+                )}
+        
         {error && <p className="text-red-500 text-center mb-3">{error}</p>}
 
         <form onSubmit={handleSignup} className="flex flex-col gap-4 w-full">
