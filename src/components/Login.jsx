@@ -15,7 +15,7 @@ const Login = () => {
       console.log("User logged in with", email, password);
       setAlert({ type: "success", message: "Login successful! Redirecting..." });
       setTimeout(() => {
-        navigate("/"); 
+        navigate("/dashboard"); 
       }, 1500);
     } else {
       setError("Please fill in all fields.");

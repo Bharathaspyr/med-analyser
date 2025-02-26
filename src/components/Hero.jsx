@@ -16,7 +16,7 @@ const Hero = () => {
           smooth
         />
         <p className="mt-6 text-xl opacity-90">
-          Upload and analyze medical images using cutting-edge AI technology for faster and more accurate diagnostics.
+        Upload your medical image to receive a simplified report using cutting-edge AI technology.
         </p>
         <motion.button
       whileHover={{ scale: 1.1 }}
