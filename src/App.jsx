@@ -20,7 +20,6 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<div className='text-center py-20 text-2xl'>Contact Us Page</div>} />
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
         </Routes>
