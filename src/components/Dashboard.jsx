@@ -7,8 +7,8 @@ const Dashboard = () => {
   const [input, setInput] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [sessions, setSessions] = useState(["Chat 1"]);
-  const [currentSession, setCurrentSession] = useState("Chat 1");
+  const [sessions, setSessions] = useState(["Session 1"]);
+  const [currentSession, setCurrentSession] = useState("Session 1");
   const username = "Ahalya";
 
   const handleSendMessage = () => {
