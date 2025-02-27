@@ -10,6 +10,8 @@ const Dashboard = () => {
   const [sessions, setSessions] = useState(["Session 1"]);
   const [currentSession, setCurrentSession] = useState("Session 1");
   const [showHistory, setShowHistory] = useState(true);
+  const [renamingSession, setRenamingSession] = useState(null);
+  const [newSessionName, setNewSessionName] = useState("");
   const username = "Ahalya";
 
   const handleSendMessage = () => {
@@ -29,7 +31,7 @@ const Dashboard = () => {
     const blob = new Blob([chatData], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "chat_history.txt";
+    link.download = `${currentSession}.txt`; 
     link.click();
   };
 
@@ -49,8 +51,35 @@ const Dashboard = () => {
     }
   };
 
+  const handleRenameSession = (index) => {
+    setRenamingSession(index);
+    setNewSessionName(sessions[index]);
+  };
+
+  const handleSessionNameChange = (e) => {
+    setNewSessionName(e.target.value);
+  };
+
+  const handleSessionNameSave = (index) => {
+    const updatedSessions = [...sessions];
+    updatedSessions[index] = newSessionName;
+    setSessions(updatedSessions);
+    setRenamingSession(null);
+  };
+
+  const handleSessionNameBlur = (index) => {
+    handleSessionNameSave(index);
+  };
+
+  const handleKeyPress = (e, index) => {
+    if (e.key === "Enter") {
+      handleSessionNameSave(index);
+    }
+  };
+
   return (
     <div className="flex h-screen w-screen bg-[#F4F6FA] text-[#1E293B]">
+      {/* Chat History Sidebar */}
       {showHistory && (
         <div className="w-1/4 bg-white p-6 shadow-md h-full overflow-y-auto flex flex-col relative rounded-r-xl">
           <h2 className="text-xl font-semibold mb-4 border-b pb-2 flex justify-between items-center text-[#3B82F6]">
@@ -64,8 +93,23 @@ const Dashboard = () => {
           </h2>
           <div className="flex-1 space-y-2 overflow-y-auto">
             {sessions.map((session, index) => (
-              <div key={index} className="flex justify-between items-center p-3 bg-gray-200 rounded-lg shadow cursor-pointer hover:bg-gray-300">
-                <span onClick={() => setCurrentSession(session)}>{session}</span>
+              <div
+                key={index}
+                className="flex justify-between items-center p-3 bg-gray-200 rounded-lg shadow cursor-pointer hover:bg-gray-300"
+                onDoubleClick={() => handleRenameSession(index)}
+              >
+                {renamingSession === index ? (
+                  <input
+                    type="text"
+                    value={newSessionName}
+                    onChange={handleSessionNameChange}
+                    onBlur={() => handleSessionNameBlur(index)}
+                    onKeyDown={(e) => handleKeyPress(e, index)}
+                    className="border p-2 rounded-lg"
+                  />
+                ) : (
+                  <span onClick={() => setCurrentSession(session)}>{session}</span>
+                )}
                 <button onClick={() => handleDeleteSession(session)} className="text-red-500 hover:text-red-700">
                   <FaTimes />
                 </button>
@@ -75,17 +119,24 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col p-6 justify-end items-center relative">
+        {/* Toggle button for chat history */}
         {!showHistory && (
-          <button onClick={() => setShowHistory(true)} className="absolute top-6 left-6 text-gray-600 hover:text-gray-900">
+          <button
+            onClick={() => setShowHistory(true)}
+            className="absolute top-6 left-6 text-gray-600 hover:text-gray-900"
+          >
             <FaBars />
           </button>
         )}
+
+        {/* User and Export Chat */}
         <div className="absolute top-6 right-6 flex items-center gap-4 bg-white p-3 rounded-lg shadow-md">
           <FaUserCircle className="text-2xl text-[#3B82F6]" />
           <span className="text-lg font-semibold">{username}</span>
-          <button onClick={handleExportChat} className="text-white bg-[#3B82F6] px-3 py-1 rounded-lg flex items-center hover:bg-[#2563EB]">
-            <FaDownload className="mr-2" /> Export Chat
+          <button onClick={handleExportChat} className="text-white bg-[#3B82F6] px-1 py-1 rounded-lg flex items-center hover:bg-[#2563EB]">
+            <FaDownload className="mr-1" /> 
           </button>
         </div>
 
@@ -116,6 +167,7 @@ const Dashboard = () => {
           </div>
         )}
 
+        {/* Message Input and File Upload */}
         <div className="flex items-center gap-4 p-5 bg-white shadow-md rounded-lg mt-6 w-full max-w-4xl">
           <label className="cursor-pointer text-gray-600 hover:text-[#3B82F6] transition">
             <FaPaperclip className="text-2xl" />
