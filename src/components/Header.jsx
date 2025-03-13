@@ -5,8 +5,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { name: "Home", path: "/" },
-    { name: "Contact", path: "/contact" },
     { name: "Login", path: "/login" },
     { name: "Sign Up", path: "/signup", special: "btn-primary" },
   ];
