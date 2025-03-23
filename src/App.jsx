@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import ConfirmEmail from "./components/ConfirmEmail";
+
 const Home = () => (
   <>
     <Hero />
@@ -23,6 +25,7 @@ const App = () => {
           <Route path="/login" element={<><Header /><Login /><Footer /></>} />
           <Route path="/signup" element={<><Header /><Signup /><Footer /></>} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
         </Routes>
 
       </div>

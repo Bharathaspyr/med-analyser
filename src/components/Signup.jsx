@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { signUp } from "../../API/authentication";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-    const [alert, setAlert] = useState(null);
+ 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const [alert, setAlert] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (firstName && lastName && email && password) {
-      console.log("User signed up with", firstName, lastName, email, password);
-      setAlert({ type: "success", message: "Signup successful! Redirecting..." });
-      setTimeout(() => {
-        navigate("/login"); 
-      }, 1500);
+    if (formData.firstName && formData.lastName && formData.email && formData.password) {
+      const user =  await signUp(formData);
+      if(!user) return setError("Error signing up. Please try again.");
+      setAlert({ type: "success", message: "Sign up successful. Redirecting..." });
+      setTimeout(() => { 
+        navigate("/confirm-email");
+      },1500);
+  
     } else {
       setError("Please fill in all fields.");
     }
@@ -57,7 +64,7 @@ const Signup = () => {
               placeholder="First Name"
               className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => setFormData(e.target.value)}
               required
             />
             <input
@@ -65,7 +72,7 @@ const Signup = () => {
               placeholder="Last Name"
               className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
               value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => setFormData(e.target.value)}
               required
             />
           </div>
@@ -75,7 +82,7 @@ const Signup = () => {
             placeholder="Email"
             className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setFormData(e.target.value)}
             required
           />
           <input
@@ -83,7 +90,7 @@ const Signup = () => {
             placeholder="Password"
             className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setFormData(e.target.value)}
             required
           />
           <motion.button

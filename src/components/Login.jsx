@@ -3,16 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",  
+    password: "",
+  });
+
+
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      console.log("User logged in with", email, password);
+    if (formData.email && formData.password) {
+      console.log("User logged in with", email, password);// changes from here
       setAlert({ type: "success", message: "Login successful! Redirecting..." });
       setTimeout(() => {
         navigate("/dashboard"); 
@@ -53,7 +57,7 @@ const Login = () => {
             placeholder="Email"
             className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setFormData(e.target.value)}
             required
           />
           <input
@@ -61,7 +65,7 @@ const Login = () => {
             placeholder="Password"
             className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setFormData(e.target.value)}
             required
           />
           <motion.button
