@@ -21,11 +21,7 @@ const Signup = () => {
     if (formData.firstName && formData.lastName && formData.email && formData.password) {
       const user =  await signUp(formData);
       if(!user) return setError("Error signing up. Please try again.");
-      setAlert({ type: "success", message: "Sign up successful. Redirecting..." });
-      setTimeout(() => { 
-        navigate("/confirm-email");
-      },1500);
-  
+      setAlert({ type: "success", message: "Check you Email for Confirmation" });
     } else {
       setError("Please fill in all fields.");
     }
@@ -63,16 +59,16 @@ const Signup = () => {
               type="text"
               placeholder="First Name"
               className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-              value={firstName}
-              onChange={(e) => setFormData(e.target.value)}
+              value={formData.firstName}
+              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               required
             />
             <input
               type="text"
               placeholder="Last Name"
               className="w-1/2 p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-              value={lastName}
-              onChange={(e) => setFormData(e.target.value)}
+              value={formData.lastName}
+              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
               required
             />
           </div>
@@ -81,16 +77,16 @@ const Signup = () => {
             type="email"
             placeholder="Email"
             className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={email}
-            onChange={(e) => setFormData(e.target.value)}
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
           />
           <input
             type="password"
             placeholder="Password"
             className="w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={password}
-            onChange={(e) => setFormData(e.target.value)}
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
           />
           <motion.button

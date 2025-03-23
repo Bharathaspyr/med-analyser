@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPaperclip, FaPaperPlane, FaSpinner, FaUserCircle, FaDownload, FaPlus, FaTimes, FaBars } from "react-icons/fa";
 
 const Dashboard = () => {
+
+  const location = useLocation();
+  const { user } = location.state || {};
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [file, setFile] = useState(null);
@@ -12,7 +17,7 @@ const Dashboard = () => {
   const [showHistory, setShowHistory] = useState(true);
   const [renamingSession, setRenamingSession] = useState(null);
   const [newSessionName, setNewSessionName] = useState("");
-  const username = "Ahalya";
+
 
   const handleSendMessage = () => {
     if (input || file) {
@@ -134,7 +139,7 @@ const Dashboard = () => {
         {/* User and Export Chat */}
         <div className="absolute top-6 right-6 flex items-center gap-4 bg-white p-3 rounded-lg shadow-md">
           <FaUserCircle className="text-2xl text-[#3B82F6]" />
-          <span className="text-lg font-semibold">{username}</span>
+          <span className="text-lg font-semibold">{user}</span>
           <button onClick={handleExportChat} className="text-white bg-[#3B82F6] px-1 py-1 rounded-lg flex items-center hover:bg-[#2563EB]">
             <FaDownload className="mr-1" /> 
           </button>
@@ -191,5 +196,6 @@ const Dashboard = () => {
     </div>
   );
 };
+
 
 export default Dashboard;
