@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { logIn } from "../../API/authentication";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",  
+    password: "",
+  });
+
+
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      console.log("User logged in with", email, password);
+    if (formData.email && formData.password) {
+      const user = await logIn(formData);
+      if (!user) return setError("Error logging in. Please try again.");
       setAlert({ type: "success", message: "Login successful! Redirecting..." });
       setTimeout(() => {
-        navigate("/dashboard"); 
+        navigate("/dashboard",
+          {
+            state: { user: user.user_metadata.firstName }
+          })
       }, 1500);
+      setFormData({ email: "", password: "" });
     } else {
       setError("Please fill in all fields.");
     }
@@ -52,18 +62,19 @@ const Login = () => {
             type="email"
             placeholder="Email"
             className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) => setFormData({...formData,email: e.target.value})}
             required
           />
           <input
             type="password"
             placeholder="Password"
             className="input w-full p-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400 transition"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={(e) => setFormData({...formData,password: e.target.value})}
             required
           />
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
